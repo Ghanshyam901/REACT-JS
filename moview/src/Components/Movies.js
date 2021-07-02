@@ -8,7 +8,9 @@ export default class Movies extends Component {
         this.state={
             // movies:getMovies()
             movies: getMovies(),
-            currSearchText:''
+            currSearchText:'',
+            currPage :1,
+            limit : 4
         }
     }
 
@@ -67,10 +69,19 @@ export default class Movies extends Component {
             movies:sortedMoviews
         })
     }
+
+    handlePageChange = (pageNumber) => {
+        this.setState({ currPage: pageNumber });
+    }
+    handleGenreChange = (genre) => {
+        this.setState({
+            cGenre: genre
+        })
+    }
     render() {
 
         console.log('render');
-        let {movies,currSearchText} =this.state; //ES6 destructuring
+        let {movies,currSearchText,limit,currPage} =this.state; //ES6 destructuring
         let filteredArr = [];
         if(currSearchText==='')
         {
@@ -84,6 +95,16 @@ export default class Movies extends Component {
                 return title.includes(currSearchText.toLowerCase());
             })
         }
+        let numberofPage = Math.ceil(filteredArr.length / limit);
+        let pageNumberArr = [];
+        for (let i = 0; i < numberofPage; i++) {
+            pageNumberArr.push(i + 1);
+        }
+
+        let si = (currPage-1)*limit;
+        let ei = (si+limit);
+
+        filteredArr = filteredArr.slice(si,ei);
         return (
             
 
@@ -119,7 +140,7 @@ export default class Movies extends Component {
                 </tr>
             </thead>
             <tbody>
-  {
+             {
         // this.state.movies.map((movieObj) =>{
             filteredArr.map((movieObj) =>{
                 return(
@@ -132,13 +153,26 @@ export default class Movies extends Component {
                         <td><button onClick={() => { this.onDelete(movieObj._id)}} type="button" className="btn btn-danger">Delete</button></td>
                         </tr>
                 )
-    })
-}
-  </tbody>
-</table>
-</div>
-</div>
-</div>
+              })
+                }
+                </tbody>
+                     </table>
+                               <nav aria-label="...">
+                                    <ul className="pagination">
+                                        {
+                                            pageNumberArr.map((pageNumber) => {
+                                                let classStyle = pageNumber === currPage ? 'page-item active' : 'page-item';
+                                                return (
+                                                    <li key={pageNumber} onClick={() => this.handlePageChange(pageNumber)}
+                                                        className={classStyle}><span className="page-link">{pageNumber}</span></li>
+                                                )
+                                            })
+                                        }
+                                    </ul>
+                                </nav>
+                          </div>
+                    </div>
+                </div>
 
         )
     }
