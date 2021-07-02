@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { getMovies } from './getMovie'
+import axios from 'axios';
+// import axios from 'axios';
 
 export default class Movies extends Component {
 
@@ -7,11 +9,22 @@ export default class Movies extends Component {
         super();
         this.state={
             // movies:getMovies()
-            movies: getMovies(),
+            movies: [],
             currSearchText:'',
             currPage :1,
             limit : 4
         }
+    }
+    async componentDidMount() {
+        console.log('Component DID Mount');
+        let res = await axios.get('https://backend-react-movie.herokuapp.com/movies');
+        // let genreRes = await axios.get('https://backend-react-movie.herokuapp.com/genres');
+        // console.log(res.data.movies);
+        console.log(res.data.movies);
+        this.setState({
+            movies: res.data.movies,
+            // genres: [...this.state.genres, ...genreRes.data.genres]
+        })
     }
 
     handleChange=(e)=>{
