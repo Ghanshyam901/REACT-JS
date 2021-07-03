@@ -33,7 +33,7 @@ export default class Todo extends Component {
     }
     onDelete = (id)=>{
         let nfa = this.state.tasks.filter(function(tobj){
-            return tobj.id!=id
+            return tobj.id!==id
         })
         this.setState({
             tasks:nfa
@@ -44,8 +44,8 @@ export default class Todo extends Component {
             //JSX
             <div className='components'>
                 <div className='input-container'>
-                    <input value={this.state.currTask} onChange={this.handleChange} type='text'></input>
-                    <button onClick={this.handleSubmit} >Add</button>
+                    <input classNAME='input'value={this.state.currTask} onChange={this.handleChange} type='text'></input>
+                    <button className='add' onClick={this.handleSubmit} >Add</button>
                 </div>
                 <div className='class-list'>
                     <ul>
@@ -54,7 +54,7 @@ export default class Todo extends Component {
                                 return(
                                     <li key={tobj.txt}>
                                         <h1>{tobj.txt}</h1>
-                                        <button onClick={()=>{
+                                        <button className ='delete' onClick={()=>{
                                             this.onDelete(tobj.id)
                                         }}>Delete</button>
                                     </li>
