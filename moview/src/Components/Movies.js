@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { getMovies } from './getMovie'
+// import { getMovies } from './getMovie'
 import axios from 'axios';
 // import axios from 'axios';
 
@@ -12,18 +12,21 @@ export default class Movies extends Component {
             movies: [],
             currSearchText:'',
             currPage :1,
-            limit : 4
+            limit : 4,
+            genres: [{ _id: 'abcd', name: 'All Genres' }],
+            cGenre: 'All Genres'
         }
     }
     async componentDidMount() {
         console.log('Component DID Mount');
         let res = await axios.get('https://backend-react-movie.herokuapp.com/movies');
+        let genreRes = await axios.get('https://backend-react-movie.herokuapp.com/genres');
         // let genreRes = await axios.get('https://backend-react-movie.herokuapp.com/genres');
         // console.log(res.data.movies);
         console.log(res.data.movies);
         this.setState({
             movies: res.data.movies,
-            // genres: [...this.state.genres, ...genreRes.data.genres]
+            genres: [...this.state.genres, ...genreRes.data.genres]
         })
     }
 
@@ -94,7 +97,7 @@ export default class Movies extends Component {
     render() {
 
         console.log('render');
-        let {movies,currSearchText,limit,currPage} =this.state; //ES6 destructuring
+        let {movies,currSearchText,limit,currPage,genres,cGenre} =this.state; //ES6 destructuring
         let filteredArr = [];
         if(currSearchText==='')
         {
@@ -106,6 +109,12 @@ export default class Movies extends Component {
                 let title = movieObj.title.toLowerCase();
                 console.log(title);
                 return title.includes(currSearchText.toLowerCase());
+            })
+        }
+        if(cGenre!=='All Genres')
+        {
+            filteredArr = filteredArr.filter(function(movieObj){
+                return movieObj.genre.name===cGenre
             })
         }
         let numberofPage = Math.ceil(filteredArr.length / limit);
@@ -125,7 +134,16 @@ export default class Movies extends Component {
 
 <div className='row'>
      <div className='col-3'>
-              {/* hello */}
+     <ul className="list-group">
+                                 {
+                                     genres.map((genreObj)=>(
+                                         <li onClick={()=>this.handleGenreChange(genreObj.name)} key={genreObj._id} className='list-group-item'>
+                                             {genreObj.name}
+                                         </li>
+                                     ))
+                                 }
+                                </ul>
+                                <h5>Current Genre : {cGenre}</h5>
            </div>
 
      <div className='col-9'>
