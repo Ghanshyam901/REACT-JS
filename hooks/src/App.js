@@ -4,7 +4,7 @@ import Us from './useState/Us';
 import Ue from './useEffect/Ue';
 import Ue2 from './useEffect/Ue2';
 import Ue3 from './useEffect/Ue3';
-
+import CleanUp from './useEffect/cleanUp/CleanUp';
 function App() {
   return (
     <>
@@ -14,7 +14,9 @@ function App() {
 
     {/* <Ue2></Ue2> */}
 
-    <Ue3></Ue3>
+    {/* <Ue3></Ue3> */}
+
+    <CleanUp></CleanUp>
     </>
   );
 }
