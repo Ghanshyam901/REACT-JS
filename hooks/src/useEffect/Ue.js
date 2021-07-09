@@ -19,3 +19,5 @@ function Ue() {
 }
 
 export default Ue
+
+// 1.component did mount and update (working like)
