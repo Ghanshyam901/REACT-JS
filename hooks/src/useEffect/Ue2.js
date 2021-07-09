@@ -17,3 +17,6 @@ useEffect(()=>{
 }
 
 export default Ue2
+
+/// dependency array is present
+
