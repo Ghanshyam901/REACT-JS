@@ -5,6 +5,7 @@ import Ue from './useEffect/Ue';
 import Ue2 from './useEffect/Ue2';
 import Ue3 from './useEffect/Ue3';
 import CleanUp from './useEffect/cleanUp/CleanUp';
+import Main from './context/Main';
 function App() {
   return (
     <>
@@ -16,7 +17,9 @@ function App() {
 
     {/* <Ue3></Ue3> */}
 
-    <CleanUp></CleanUp>
+    {/* <CleanUp></CleanUp> */}
+    
+    <Main></Main>
     </>
   );
 }
